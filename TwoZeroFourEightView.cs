@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace twozerofoureight
@@ -14,6 +8,7 @@ namespace twozerofoureight
     {
         Model model;
         Controller controller;
+
        
         public TwoZeroFourEightView()
         {
@@ -59,6 +54,7 @@ namespace twozerofoureight
         }
         private void UpdateBoard(int[,] board)
         {
+
             UpdateTile(lbl00,board[0, 0]);
             UpdateTile(lbl01,board[0, 1]);
             UpdateTile(lbl02,board[0, 2]);
@@ -75,6 +71,20 @@ namespace twozerofoureight
             UpdateTile(lbl31,board[3, 1]);
             UpdateTile(lbl32,board[3, 2]);
             UpdateTile(lbl33,board[3, 3]);
+            int sum = 0,counter=0;
+            for(int i =0;i<4;i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    sum += board[i,j];
+                    if (board[i, j] != 0) counter++;
+                }
+            }
+            Score.Text = sum.ToString();
+            if(IsBoardFull(board)&&!IsMergeable(board))
+            {
+                gameover.Show();
+            }
         }
 
         private void btnLeft_Click(object sender, EventArgs e)
@@ -97,5 +107,63 @@ namespace twozerofoureight
             controller.ActionPerformed(TwoZeroFourEightController.DOWN);
         }
 
+        private bool IsMergeable(int[,] board)
+        {
+            int readyToMerge = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (board[i, j] == board[i + 1, j]) readyToMerge++;
+                }
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (board[i, j] == board[i, j + 1]) readyToMerge++;
+                }
+            }
+            if (readyToMerge == 0) return false;
+            return true;
+        }
+
+        private bool IsBoardFull(int[,] board)
+        {
+            int count = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (board[i,j] != 0) count++;
+                }
+            }
+            if (count == 16) return true;
+            return false;
+        }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Right))
+            {
+                btnRight.PerformClick();
+                return true;
+            }
+            else if (keyData == (Keys.Left))
+            {
+                btnLeft.PerformClick();
+                return true;
+            }
+            else if (keyData == (Keys.Up))
+            {
+                btnUp.PerformClick();
+                return true;
+            }
+            else if (keyData == (Keys.Down))
+            {
+                btnDown.PerformClick();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
     }
 }
