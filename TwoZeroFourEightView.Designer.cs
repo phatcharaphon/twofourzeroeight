@@ -348,9 +348,9 @@
             this.gameover.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gameover.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.gameover.ForeColor = System.Drawing.Color.White;
-            this.gameover.Location = new System.Drawing.Point(12, 405);
+            this.gameover.Location = new System.Drawing.Point(12, 381);
             this.gameover.Name = "gameover";
-            this.gameover.Size = new System.Drawing.Size(319, 76);
+            this.gameover.Size = new System.Drawing.Size(319, 134);
             this.gameover.TabIndex = 21;
             this.gameover.Text = "Game Over";
             this.gameover.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

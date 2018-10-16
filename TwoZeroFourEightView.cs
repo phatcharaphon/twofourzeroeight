@@ -54,7 +54,6 @@ namespace twozerofoureight
         }
         private void UpdateBoard(int[,] board)
         {
-
             UpdateTile(lbl00,board[0, 0]);
             UpdateTile(lbl01,board[0, 1]);
             UpdateTile(lbl02,board[0, 2]);
@@ -71,17 +70,16 @@ namespace twozerofoureight
             UpdateTile(lbl31,board[3, 1]);
             UpdateTile(lbl32,board[3, 2]);
             UpdateTile(lbl33,board[3, 3]);
-            int sum = 0,counter=0;
+            int sum = 0;
             for(int i =0;i<4;i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
                     sum += board[i,j];
-                    if (board[i, j] != 0) counter++;
                 }
             }
             Score.Text = sum.ToString();
-            if(IsBoardFull(board)&&!IsMergeable(board))
+            if( (((TwoZeroFourEightModel)model).IsBoardFull(board)) && !(((TwoZeroFourEightModel)model).IsMergeable(board)) )
             {
                 gameover.Show();
             }
@@ -106,41 +104,7 @@ namespace twozerofoureight
         {
             controller.ActionPerformed(TwoZeroFourEightController.DOWN);
         }
-
-        private bool IsMergeable(int[,] board)
-        {
-            int readyToMerge = 0;
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    if (board[i, j] == board[i + 1, j]) readyToMerge++;
-                }
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (board[i, j] == board[i, j + 1]) readyToMerge++;
-                }
-            }
-            if (readyToMerge == 0) return false;
-            return true;
-        }
-
-        private bool IsBoardFull(int[,] board)
-        {
-            int count = 0;
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    if (board[i,j] != 0) count++;
-                }
-            }
-            if (count == 16) return true;
-            return false;
-        }
+        
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Right))
